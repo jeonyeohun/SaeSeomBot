@@ -9,9 +9,7 @@ function parseData(data, isMenuData = true, isMomsData = false) {
   const parsedData = data.split('\r\n');
 
   if (isMenuData && isMomsData) {
-    // console.log(parsedData);
     result = parsedData.filter((menu) => menu != '');
-    console.log(result);
     if (result.length == 0) {
       result = ['오늘은 운영하지 않아요 :)'];
     }
@@ -140,7 +138,7 @@ function runner() {
   );
 }
 
-const job = schedule.scheduleJob('1 0 0 * * *', function () {
+const job = schedule.scheduleJob('1 * * * * *', function () {
   console.log('run scheduled work');
   runner();
 });
