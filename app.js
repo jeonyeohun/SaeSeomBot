@@ -7,10 +7,10 @@ app.use(express.json());
 
 function genreateTimeMealText(corner, initialText) {
   console.log(corner);
-  const price = '가격: ' + corner.price + '원\n';
-  const morningMenu = '조식: ' + corner.morning.join(', ') + '\n';
-  const lunchMenu = '중식: ' + corner.lunch.join(', ') + '\n';
-  const dinnerMenu = '석식: ' + corner.dinner.join(', ') + '\n';
+  const price = '가격: ' + corner.price + '원\n\n';
+  const morningMenu = '🥚 조식 🥚\n' + corner.morning.join('\n') + '\n\n';
+  const lunchMenu = '🐣 중식 🐣\n' + corner.lunch.join('\n') + '\n\n';
+  const dinnerMenu = '🐓 석식 🐓\n' + corner.dinner.join('\n') + '\n\n';
 
   return initialText + price + morningMenu + lunchMenu + dinnerMenu;
 }
@@ -30,7 +30,7 @@ function generateGeneralMealText(corner, initialText) {
   return initialText;
 }
 
-app.post('/moms', async (req, res) => {
+app.get('/moms', async (req, res) => {
   let data = await fs.readFile(
     './raw_data/meal-moms.json',
     'utf-8',
@@ -62,7 +62,7 @@ app.post('/moms', async (req, res) => {
   res.json(result);
 });
 
-app.post('/haksik', async (req, res) => {
+app.get('/haksik', async (req, res) => {
   let data = await fs.readFile(
     './raw_data/meal-hak.json',
     'utf-8',
@@ -109,6 +109,8 @@ app.post('/haksik', async (req, res) => {
     graceGardenText +
     '\n' +
     mixRiceText;
+
+  console.log(haksikText);
 
   const result = {
     version: '2.0',
