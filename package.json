@@ -1,0 +1,23 @@
+{
+  "name": "SaeSeomBot",
+  "version": "1.0.0",
+  "description": "한동생활을 도와주는 편리한 챗봇",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeonyeohun/SaeSeomBot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeonyeohun/SaeSeomBot/issues"
+  },
+  "homepage": "https://github.com/jeonyeohun/SaeSeomBot#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
