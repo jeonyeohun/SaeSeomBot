@@ -107,5 +107,3 @@ const job = schedule.scheduleJob('1 0 0 * * *', function () {
   console.log('run scheduled work');
   runner();
 });
-
-runner();
