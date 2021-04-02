@@ -18,30 +18,34 @@ function convertSecToMin(seconds) {
 function generateArrivalTimeText(convertedTime) {
   let timeText;
   if (convertedTime.hour)
-    timeText = convertedTime.hour + '시간 ' + convertedTime.min + '분 ';
-  else timeText = convertedTime.min + '분 ';
+    timeText = convertedTime.hour + '시간 ' + convertedTime.min + '분';
+  else timeText = convertedTime.min + '분';
 
   return timeText;
 }
 
 function generateBusText(isToHandong, infos) {
   if (!infos) return '지금은 운행 중인 302번 버스가 없어요 😔\n';
-
   info = infos[0];
+  const convertedTime = convertSecToMin(info.arrtime);
+  const timeText = generateArrivalTimeText(convertedTime);
 
   const startPoint = isToHandong ? '양덕 농협' : '한동대';
   const destination = isToHandong ? '한동대행' : '양덕행';
   const initialText =
-    '곧 ' +
-    startPoint +
-    '에 도착할 ' +
+    '[ ' +
+    timeText +
+    ' 뒤에 ' +
     destination +
-    ' 버스의 도착 예정 시간을 알려드릴게요! 🚌 \n';
+    ' 버스가 ' +
+    startPoint +
+    '에 도착해요! 🚌]\n\n';
+
   const cntText =
     '지금 302번 버스는 ' +
     info.arrprevstationcnt +
     '번째 전 정류장에 있어요!\n';
-  const convertedTime = convertSecToMin(info.arrtime);
+
   const arrivalTimeText =
     '\n제 정보통에 따르면..🤖 \n아마도 ' +
     generateArrivalTimeText(convertedTime) +
@@ -49,20 +53,26 @@ function generateBusText(isToHandong, infos) {
 
   let nextBusText = '\n다음 버스는 ';
   let nextTimes = [];
+
   for (let i = 1; i < infos.length; i++) {
     nextTimes.push(generateArrivalTimeText(convertSecToMin(infos[i].arrtime)));
   }
-  if (nextTimes.length == 0)
+
+  if (nextTimes.length == 0) {
     nextBusText =
       '\n다음 버스에 대한 정보는 아직 없어요..! 잠시 뒤에 오시면 알아올게요!!';
-  else nextBusText += nextTimes.join('분, ') + ' 뒤에 또 있어요!';
+  } else {
+    nextBusText += nextTimes.join('분, ') + ' 뒤에 또 있어요 🐥';
+  }
 
   const handongText =
     "\n\n⛔️ 한동대 도착시간은 '한동대입구' 정류장을 기준으로 알려드려요! 한동대에서 출발하는 시간이 아니라 한동대에 도착하는 시간이에요!";
 
-  if (isToHandong) return initialText + cntText + arrivalTimeText + nextBusText;
-  else
+  if (isToHandong) {
+    return initialText + cntText + arrivalTimeText + nextBusText;
+  } else {
     return initialText + cntText + arrivalTimeText + nextBusText + handongText;
+  }
 }
 
 function parseTimeAndStation(arrivalInfo) {
@@ -101,7 +111,8 @@ module.exports.arrivalInfoToHandong = (callback) => {
     });
 
     const resultText = generateBusText(true, timeAndStationCnt);
-    callback(resultText);
+    console.log(resultText);
+    // callback(resultText);
   });
 };
 
@@ -119,6 +130,6 @@ module.exports.arrivalInfoToYangdeok = (callback) => {
       });
 
     const resultText = generateBusText(false, timeAndStationCnt);
-    callback(resultText);
+    // callback(resultText);
   });
 };

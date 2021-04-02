@@ -2,7 +2,7 @@ module.exports.genreateTimeMealText = (corner, initialText) => {
   const price = '가격: ' + corner.price + '원\n\n';
   const morningMenu = '🥚 조식 🥚\n' + corner.morning.join('\n') + '\n\n';
   const lunchMenu = '🐣 중식 🐣\n' + corner.lunch.join('\n') + '\n\n';
-  const dinnerMenu = '🐓 석식 🐓\n' + corner.dinner.join('\n') + '\n\n';
+  const dinnerMenu = '🐥 석식 🐥\n' + corner.dinner.join('\n') + '\n\n';
 
   return initialText + price + morningMenu + lunchMenu + dinnerMenu;
 };
