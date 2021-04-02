@@ -111,8 +111,8 @@ module.exports.arrivalInfoToHandong = (callback) => {
     });
 
     const resultText = generateBusText(true, timeAndStationCnt);
-    console.log(resultText);
-    // callback(resultText);
+    // console.log(resultText);
+    callback(resultText);
   });
 };
 
@@ -130,6 +130,6 @@ module.exports.arrivalInfoToYangdeok = (callback) => {
       });
 
     const resultText = generateBusText(false, timeAndStationCnt);
-    // callback(resultText);
+    callback(resultText);
   });
 };
