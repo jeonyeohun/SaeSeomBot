@@ -39,7 +39,7 @@ function generateBusText(isToHandong, infos) {
     destination +
     ' 버스가 ' +
     startPoint +
-    '에 도착해요! 🚌]\n\n';
+    '에 도착해요! 🚌 ]\n\n';
 
   const cntText =
     '지금 302번 버스는 ' +
@@ -66,7 +66,7 @@ function generateBusText(isToHandong, infos) {
   }
 
   const handongText =
-    "\n\n⛔️ 한동대 도착시간은 '한동대입구' 정류장을 기준으로 알려드려요! 한동대에서 출발하는 시간이 아니라 한동대에 도착하는 시간이에요!";
+    "\n\n⛔️ 한동대 도착시간은 '한동대입구' 정류장을 기준으로 알려드려요! 한동대에서 출발하는 시간이 아니라 한동대에 도착하는 시간이에요! 이 때문에 현재 학교에서 대기중인 버스의 유무와 출발시간은 아직 지원하지 않아요. 조금만 기다려주세요! 😔";
 
   if (isToHandong) {
     return initialText + cntText + arrivalTimeText + nextBusText;
@@ -111,7 +111,6 @@ module.exports.arrivalInfoToHandong = (callback) => {
     });
 
     const resultText = generateBusText(true, timeAndStationCnt);
-    // console.log(resultText);
     callback(resultText);
   });
 };
