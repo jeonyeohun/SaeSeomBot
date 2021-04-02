@@ -14,12 +14,7 @@ app.use('/haksik', haksik);
 app.use('/weather', weather);
 app.use('/bus', bus);
 
-schedule.scheduleJob('0 0 * * * *', function () {
-  console.log('run scheduled work');
-  updateHaksikData();
-});
-
-schedule.scheduleJob('0 0 * * * *', function () {
+schedule.scheduleJob('1 0 0 * * *', function () {
   console.log('run scheduled work');
   updateHaksikData();
 });
