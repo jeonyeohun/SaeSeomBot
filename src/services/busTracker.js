@@ -25,7 +25,9 @@ function generateArrivalTimeText(convertedTime) {
 }
 
 function generateBusText(isToHandong, infos) {
-  if (!infos) return '지금은 운행 중인 302번 버스가 없어요 😔\n';
+  let now = new Date();
+  if (!infos || now.getHours() >= 23 || now.getHours() < 5)
+    return '지금은 운행 중인 302번 버스가 없어요 😔\n';
   info = infos[0];
   const convertedTime = convertSecToMin(info.arrtime);
   const timeText = generateArrivalTimeText(convertedTime);
@@ -106,9 +108,11 @@ module.exports.arrivalInfoToHandong = (callback) => {
     const arrivalInfo = responseBody.response.body.items.item;
     let timeAndStationCnt = parseTimeAndStation(arrivalInfo);
 
-    timeAndStationCnt.sort((a, b) => {
-      return a.arrtime - b.arrtime;
-    });
+    if (timeAndStationCnt) {
+      timeAndStationCnt.sort((a, b) => {
+        return a.arrtime - b.arrtime;
+      });
+    }
 
     const resultText = generateBusText(true, timeAndStationCnt);
     callback(resultText);
@@ -123,10 +127,11 @@ module.exports.arrivalInfoToYangdeok = (callback) => {
     const arrivalInfo = responseBody.response.body.items.item;
     let timeAndStationCnt = parseTimeAndStation(arrivalInfo);
 
-    if (timeAndStationCnt)
+    if (timeAndStationCnt) {
       timeAndStationCnt.sort((a, b) => {
         return a.arrtime - b.arrtime;
       });
+    }
 
     const resultText = generateBusText(false, timeAndStationCnt);
     callback(resultText);
