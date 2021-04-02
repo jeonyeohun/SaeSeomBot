@@ -1,5 +1,4 @@
 module.exports.genreateTimeMealText = (corner, initialText) => {
-  console.log(corner);
   const price = '가격: ' + corner.price + '원\n\n';
   const morningMenu = '🥚 조식 🥚\n' + corner.morning.join('\n') + '\n\n';
   const lunchMenu = '🐣 중식 🐣\n' + corner.lunch.join('\n') + '\n\n';
@@ -9,7 +8,6 @@ module.exports.genreateTimeMealText = (corner, initialText) => {
 };
 
 module.exports.generateGeneralMealText = (corner, initialText) => {
-  console.log(corner);
   let menuNum = corner.menus.length;
 
   for (let i = 0; i < menuNum; i++) {

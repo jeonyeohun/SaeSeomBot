@@ -19,4 +19,9 @@ schedule.scheduleJob('0 0 * * * *', function () {
   updateHaksikData();
 });
 
+schedule.scheduleJob('0 0 * * * *', function () {
+  console.log('run scheduled work');
+  updateHaksikData();
+});
+
 app.listen(3000, () => console.log('node on 3000'));

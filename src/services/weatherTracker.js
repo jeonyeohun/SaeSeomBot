@@ -1,5 +1,5 @@
 const request = require('request');
-const openWeatherAPIKey = require('../keys/apiKeys');
+const { openWeatherAPIKey } = require('../keys/apiKeys');
 
 const weatherCondition = {
   Thunderstorm: '🌩 천둥번개가',
@@ -10,7 +10,7 @@ const weatherCondition = {
   Smoke: '💨 매연이',
   Haze: '💨 안개가',
   Dust: '😷 미세먼지가',
-  Clear: '☀️ 맑은',
+  Clear: '☀️ 맑은 하늘이',
   Clouds: '☁️ 구름이',
 };
 
@@ -47,7 +47,7 @@ function generateText(currentWeather) {
   return currentWeatherDescription;
 }
 
-module.exports.weatherText = async (callback) => {
+module.exports.weatherForecast = async (callback) => {
   request.get(apiUrl, (response, body) => {
     responseBody = JSON.parse(body.body);
     const result = generateText(responseBody.current);

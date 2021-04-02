@@ -1,6 +1,5 @@
 const request = require('request');
 const fs = require('fs').promises;
-const schedule = require('node-schedule');
 
 const MORNING_MENU = 0;
 const LUNCH_MENU = 1;
@@ -11,7 +10,7 @@ const HAO = 5;
 const GRACE_GARDEN = 6;
 const MIX_RICE = 7;
 
-const jsonSaveDir = '../../data/';
+const jsonSaveDir = '../data/';
 
 function parseData(data, isMenuData = true, isMomsData = false) {
   if (!data && isMenuData) return ['오늘은 운영하지 않아요 :)'];
@@ -54,7 +53,6 @@ function saveJSON(data, isMomsData = false) {
 
   fs.writeFile(dir, JSON.stringify(data), (err) => {
     if (err) throw err;
-    console.log('data is saved in  ' + dir);
   });
 }
 
@@ -89,7 +87,7 @@ function parseMomsData(responseBody) {
   saveJSON(data, true);
 }
 
-function runner() {
+module.exports.updateHaksikData = () => {
   request.get(
     {
       url: 'http://smart.handong.edu/api/service/menu',
@@ -101,9 +99,4 @@ function runner() {
       parseMomsData(responseBody);
     }
   );
-}
-
-const job = schedule.scheduleJob('1 0 0 * * *', function () {
-  console.log('run scheduled work');
-  runner();
-});
+};
