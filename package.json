@@ -19,6 +19,7 @@
   "homepage": "https://github.com/jeonyeohun/SaeSeomBot#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "node-schedule": "^2.0.0",
     "request-promise": "^4.2.6"
   },
   "devDependencies": {
