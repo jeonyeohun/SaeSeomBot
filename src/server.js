@@ -13,7 +13,7 @@ const { updateHaksikData } = require('./services/dailyHaksikDataGenerator');
 let counter = { ...counterData };
 
 app.use(function (req, res, next) {
-  const type = req.url.slice(req.url.lastIndexOf('/'));
+  const type = req.url.slice(req.url.lastIndexOf('/') + 1);
   counter[type]++;
   counter[type + 'Total']++;
   next();
