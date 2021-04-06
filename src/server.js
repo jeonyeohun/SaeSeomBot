@@ -13,8 +13,9 @@ const { updateHaksikData } = require('./services/dailyHaksikDataGenerator');
 let counter = { ...counterData };
 
 app.use(function (req, res, next) {
-  counter[req.url.slice(1)]++;
-  counter[req.url.slice(1) + 'Total']++;
+  const type = req.url.slice(req.url.lastIndexOf('/'));
+  counter[type]++;
+  counter[type + 'Total']++;
   next();
 });
 
@@ -29,7 +30,7 @@ schedule.scheduleJob('1 0 0 * * *', function () {
   updateHaksikData();
 });
 
-schedule.scheduleJob('1 0 * * * *', function () {
+schedule.scheduleJob('1 59 * * * *', function () {
   const hrs = new Date().getHours();
   const dir = '../log/' + getToday();
   const fileDir = '/' + hrs + '.json';
@@ -42,7 +43,8 @@ schedule.scheduleJob('1 0 * * * *', function () {
       ? {
           ...counter,
           weather: 0,
-          bus: 0,
+          toHandong: 0,
+          toYangdeok: 0,
           haksik: 0,
           moms: 0,
         }
