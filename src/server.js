@@ -39,7 +39,7 @@ schedule.scheduleJob('1 59 * * * *', function () {
   fs.writeFileSync(dir + fileDir, JSON.stringify(counter), { flag: 'w' });
 
   counter =
-    hrs == 23
+    hrs != 23
       ? {
           ...counter,
           weather: 0,
