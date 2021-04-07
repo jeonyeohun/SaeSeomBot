@@ -14,8 +14,10 @@ let counter = { ...counterData };
 
 app.use(function (req, res, next) {
   const type = req.url.slice(req.url.lastIndexOf('/') + 1);
-  counter[type]++;
-  counter[type + 'Total']++;
+  if (counter[type] != undefined) {
+    counter[type]++;
+    counter[type + 'Total']++;
+  }
   next();
 });
 
