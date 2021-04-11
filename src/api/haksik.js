@@ -18,6 +18,13 @@ router.post('/', async (req, res) => {
     }
   );
 
+  if (data === '""') {
+    const resultData = { ...ResultData };
+    resultData.template.outputs[0].simpleText.text =
+      '아직 식단이 업데이트 되지 않았어요!';
+
+    return res.json(resultData);
+  }
   parsedData = JSON.parse(data);
 
   const koreanTableText = genreateTimeMealText(

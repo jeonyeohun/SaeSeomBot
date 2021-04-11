@@ -71,6 +71,10 @@ function parseTimeMealData(corner, price, isMomsData = false) {
 }
 
 function parseHaksikData(responseBody) {
+  if (responseBody.haksik.length === 0) {
+    saveJSON('', false);
+    return;
+  }
   const data = {
     koreanTable: parseTimeMealData(responseBody.haksik, '3,000'),
     fryFry: parseGeneralMealData(responseBody.haksik, FRYFRY),
@@ -83,6 +87,10 @@ function parseHaksikData(responseBody) {
 }
 
 function parseMomsData(responseBody) {
+  if (responseBody.moms.length === 0) {
+    saveJSON('', false);
+    return;
+  }
   const data = parseTimeMealData(responseBody.moms, '4,000', true);
   saveJSON(data, true);
 }
@@ -94,7 +102,6 @@ module.exports.updateHaksikData = () => {
     },
     function (response, body) {
       responseBody = JSON.parse(body.body);
-
       parseMomsData(responseBody);
       parseHaksikData(responseBody);
     }
