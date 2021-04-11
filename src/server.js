@@ -52,6 +52,7 @@ schedule.scheduleJob('1 59 * * * *', function () {
           toYangdeok: 0,
           haksik: 0,
           moms: 0,
+          covid: 0,
         }
       : {
           ...counterData,
