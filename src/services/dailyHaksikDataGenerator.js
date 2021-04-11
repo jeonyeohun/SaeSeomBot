@@ -95,8 +95,8 @@ module.exports.updateHaksikData = () => {
     function (response, body) {
       responseBody = JSON.parse(body.body);
 
-      parseHaksikData(responseBody);
       parseMomsData(responseBody);
+      parseHaksikData(responseBody);
     }
   );
 };
