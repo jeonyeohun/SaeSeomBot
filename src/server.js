@@ -6,6 +6,8 @@ const moms = require('./api/moms');
 const weather = require('./api/weather');
 const bus = require('./api/bus');
 const schedule = require('node-schedule');
+const covid = require('./api/covid');
+
 const counterData = require('./models/countData');
 const { getToday } = require('./utils/dateParser');
 const { updateHaksikData } = require('./services/dailyHaksikDataGenerator');
@@ -25,6 +27,7 @@ app.use('/moms', moms);
 app.use('/haksik', haksik);
 app.use('/weather', weather);
 app.use('/bus', bus);
+app.use('/covid', covid);
 
 schedule.scheduleJob('1 0 0 * * *', function () {
   updateHaksikData();
