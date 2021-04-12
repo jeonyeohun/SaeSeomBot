@@ -31,7 +31,7 @@ app.use('/weather', weather);
 app.use('/bus', bus);
 app.use('/covid', covid);
 
-schedule.scheduleJob('1 0 0 * * *', function () {
+schedule.scheduleJob('1 0 * * * *', function () {
   updateHaksikData();
 });
 
