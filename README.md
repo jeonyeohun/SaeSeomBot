@@ -7,13 +7,12 @@
 ## Skill Stack
 
 - NodeJS Express
-- Javascript
 - Kakao OpenBuilder
 - AWS EC2
 
 ## Project Flow
 
-<전체 흐름 첨부 예정>
+![workflow](img/work-flow.png)
 
 ## Project Structure
 
@@ -38,7 +37,7 @@
     - server.js
 ```
 
-- log : 매 정각마다 사용자들이 어떤 API를 호출했는지에 대한 횟수정보가 저장됩니다. log 아래에 yyyy-dd-mm 형태의 디렉토리가 생성되고 0시부터 1시까지 저장된 정보는 1.json, 1시부터 2시까지 저장된 정보는 2.json 과 같은 형태로 저장됩니다.
+- log : 매 시 정각마다 사용자들이 어떤 API를 호출했는지에 대한 횟수정보가 저장됩니다. log 아래에 yyyy-dd-mm 형태의 디렉토리가 생성되고 0시부터 1시까지 저장된 정보는 1.json, 1시부터 2시까지 저장된 정보는 2.json 과 같은 형태로 저장됩니다.
 - data : 데이터베이스 대신 사용합니다. 현재는 당일의 학식 데이터인 `meal-hak.json` 와 맘스 키친 데이터인 `meal-moms.json` 이 저장됩니다.
 - api : 각 요청의 Method 와 파라미터를 처리하는 과정을 정의합니다.
 - keys : API 관련 키들을 저장합니다. 깃허브 저장소에는 푸쉬하지 않습니다.
@@ -52,6 +51,7 @@
 1. Handong Open API
 2. [Open Weather API](https://openweathermap.org/api)
 3. [국토부 버스도착정보 API](https://data.go.kr/data/15000757/openapi.do)
+4. [굿바이 코로나 API](https://api.corona-19.kr/)
 
 ## Getting Started
 
@@ -79,3 +79,4 @@
 3. `/bus/toHandong` : 한동대학교행 302번 버스 양덕 농협 정류장 도착 정보
 4. `/bus/toYangdeok` : 양덕행 302번 버스 한동대학교 정류장 도착 정보
 5. `/weather` : 현재 날씨 정보
+6. `/covid` : 금일 시도별 신규 확진자 현황
