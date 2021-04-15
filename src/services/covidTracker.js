@@ -14,7 +14,9 @@ module.exports.covidStatus = async (callback) => {
 
   let cityKeys = ['city1n', 'city2n', 'city3n', 'city4n', 'city5n'];
   let responseBody = JSON.parse(await requestP.get(generalCountUrl));
-  const countDiff = '(전일대비 ' + responseBody['TotalCaseBefore'] + ')';
+  const diffText = responseBody['TotalCaseBefore'] < 0 ? '감소)' : '증가)';
+  const countDiff =
+    '(전일대비 ' + Math.abs(responseBody['TotalCaseBefore']) + '명 ' + diffText;
   const updateTime = responseBody.updateTime;
 
   let cities = {};
