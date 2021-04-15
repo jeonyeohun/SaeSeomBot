@@ -1,5 +1,5 @@
-const request = require('request');
-const { openWeatherAPIKey } = require('../keys/apiKeys');
+const requestP = require('request-promise');
+const { openWeatherAPIKey, dustAPIKey } = require('../keys/apiKeys');
 
 const weatherCondition = {
   Thunderstorm: '🌩 천둥번개가',
@@ -30,6 +30,7 @@ const weatherMessage = {
   Clouds: '우중충한 날씨이지만, 소확행으로 가득 찬 하루가 되었으면 좋겠어요!😊',
 };
 
+// TODO: Add wind speed
 const windSpeedMessage = {
   noWind: '오늘은 바람이 많이 불지는 않아요!',
   weakWind: '오늘은 가볍게 바람이 부는 날씨네요!',
@@ -41,7 +42,18 @@ const apiUrl =
   openWeatherAPIKey +
   '&lang=kr&exclude=minutely,hourly,alerts&units=metric';
 
-function generateText(weather) {
+function generateDustUrl() {
+  let date = new Date();
+  let year = date.getFullYear();
+  let month = ('0' + (1 + date.getMonth())).slice(-2);
+  let day = ('0' + date.getDate()).slice(-2);
+
+  const todayDate = year + '-' + month + '-' + day;
+
+  return `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth?serviceKey=${dustAPIKey}&returnType=json&numOfRows=100javascript:fn_preview(%27pre%27)&pageNo=1&searchDate=${todayDate}&InformCode=PM25`;
+}
+
+function generateWeatherText(weather) {
   const currentWeather = weather.current;
   const minTemp = weather.daily[0].temp.min;
   const maxTemp = weather.daily[0].temp.max;
@@ -59,20 +71,52 @@ function generateText(weather) {
     parseInt(maxTemp) +
     '도, 최저 기온은 ' +
     parseInt(minTemp) +
-    '도라고 알려줬어요! \n\n오늘도 좋은 하루 보내세요 🧚';
+    '도라고 알려줬어요! \n\n';
 
   todayWeatherDescription +=
     maxTemp - minTemp >= 10
-      ? '오늘은 일교차가 큰 하루에요, 감기걸리지 않게 조심해요😢\n'
-      : '\n';
+      ? '오늘은 일교차가 큰 하루에요, 감기걸리지 않게 조심해요 😢\n\n'
+      : '\n\n';
 
   return currentWeatherDescription + todayWeatherDescription;
 }
 
+function generateDustText(responseBody) {
+  const dustCast = responseBody.response.body.items;
+  let dustStatusString = dustCast[0].informGrade;
+  let idx = dustStatusString.indexOf('경북 : ');
+  const pm10Status = dustStatusString.slice(
+    idx + 5,
+    dustStatusString.indexOf(',', idx)
+  );
+  dustStatusString = dustCast[1].informGrade;
+  idx = dustStatusString.indexOf('경북 : ');
+  const pm25Status = dustStatusString.slice(
+    idx + 5,
+    dustStatusString.indexOf(',', idx)
+  );
+
+  return (
+    '오늘 경상북도의 미세먼지 상태는 "' +
+    pm10Status +
+    '", 초 미세먼지 상태는 "' +
+    pm25Status +
+    '" 이에요! 마스크는 필수인거 아시죠?? 😷\n\n'
+  );
+}
+
 module.exports.weatherForecast = async (callback) => {
-  request.get(apiUrl, (response, body) => {
-    responseBody = JSON.parse(body.body);
-    const result = generateText(responseBody);
-    callback(result);
-  });
+  responseBody = JSON.parse(await requestP.get(apiUrl));
+  const weatherText = generateWeatherText(responseBody);
+
+  console.log(generateDustUrl());
+  responseBody = JSON.parse(await requestP.get(generateDustUrl()));
+
+  const dustText = generateDustText(responseBody);
+  const lastText =
+    '날씨요정이 여러분들의 하루를 응원하고 있어요 🧚 \n오늘도 잘 사아내고 있어요, 좋은 하루 보내요! 💪';
+
+  console.log(weatherText + dustText + lastText);
+
+  callback(weatherText + dustText + lastText);
 };
