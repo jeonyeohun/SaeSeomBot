@@ -71,18 +71,20 @@ function generateWeatherText(weather) {
     parseInt(maxTemp) +
     '도, 최저 기온은 ' +
     parseInt(minTemp) +
-    '도라고 알려줬어요! \n\n';
+    '도라고 알려줬어요!\n';
 
   todayWeatherDescription +=
     maxTemp - minTemp >= 10
       ? '오늘은 일교차가 큰 하루에요, 감기걸리지 않게 조심해요 😢\n\n'
-      : '\n\n';
+      : '\n';
 
   return currentWeatherDescription + todayWeatherDescription;
 }
 
 function generateDustText(responseBody) {
   const dustCast = responseBody.response.body.items;
+  if (dustCast.length === 0)
+    return '오늘의 미세먼지 예보는 오전 5시에 업데이트 되어요! 아침에 다시 확인해주세요..!\n';
   let dustStatusString = dustCast[0].informGrade;
   let idx = dustStatusString.indexOf('경북 : ');
   const pm10Status = dustStatusString.slice(
@@ -99,7 +101,7 @@ function generateDustText(responseBody) {
   return (
     '오늘 경상북도의 미세먼지 상태는 "' +
     pm10Status +
-    '", 초 미세먼지 상태는 "' +
+    '", 초미세먼지 상태는 "' +
     pm25Status +
     '" 이에요! 마스크는 필수인거 아시죠?? 😷\n\n'
   );
@@ -108,15 +110,10 @@ function generateDustText(responseBody) {
 module.exports.weatherForecast = async (callback) => {
   responseBody = JSON.parse(await requestP.get(apiUrl));
   const weatherText = generateWeatherText(responseBody);
-
-  console.log(generateDustUrl());
   responseBody = JSON.parse(await requestP.get(generateDustUrl()));
 
   const dustText = generateDustText(responseBody);
   const lastText =
     '날씨요정이 여러분들의 하루를 응원하고 있어요 🧚 \n오늘도 잘 사아내고 있어요, 좋은 하루 보내요! 💪';
-
-  console.log(weatherText + dustText + lastText);
-
   callback(weatherText + dustText + lastText);
 };
