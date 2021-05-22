@@ -25,6 +25,7 @@
         - haksik.js
         - moms.js
         - weather.js
+        - covid.js
     - keys
         - apiKeys.js
     - models
