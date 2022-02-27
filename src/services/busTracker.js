@@ -4,9 +4,9 @@ const { busTrackerAPIKey } = require('../keys/apiKeys');
 const apiUrl =
   'http://openapi.tago.go.kr/openapi/service/ArvlInfoInqireService/getSttnAcctoSpcifyRouteBusArvlPrearngeInfoList?serviceKey=';
 const apiParamToHandong =
-  '&cityCode=37010&nodeId=PHB351016075&routeId=PHB350000233&_type=json';
+  '&cityCode=37010&nodeId=PHB351016075&routeId=PHB350000389&_type=json';
 const apiParamToYangdeok =
-  '&cityCode=37010&nodeId=PHB350099178&routeId=PHB350000233&_type=json';
+  '&cityCode=37010&nodeId=PHB350099178&routeId=PHB350000389&_type=json';
 
 function convertSecToMin(seconds) {
   const hour = parseInt(seconds / 3600);
@@ -26,8 +26,7 @@ function generateArrivalTimeText(convertedTime) {
 
 function generateBusText(isToHandong, infos) {
   let now = new Date();
-  if (!infos || now.getHours() >= 23 || now.getHours() < 5)
-    return '지금은 운행 중인 302번 버스가 없어요 😔\n';
+  if (!infos) return '지금은 운행 중인 302번 버스가 없거나 다음버스 정보를 기다리는 중이에요😔\n 양덕행 버스는 학교에 도착해 출발 대기중일 수도 있어요!';
   info = infos[0];
   const convertedTime = convertSecToMin(info.arrtime);
   const timeText = generateArrivalTimeText(convertedTime);

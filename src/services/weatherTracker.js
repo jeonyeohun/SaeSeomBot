@@ -84,7 +84,7 @@ function generateWeatherText(weather) {
 function generateDustText(responseBody) {
   const dustCast = responseBody.response.body.items;
   if (dustCast.length === 0)
-    return '오늘의 미세먼지 예보는 오전 5시에 업데이트 되어요! 아침에 다시 확인해주세요..!\n';
+    return '오늘의 미세먼지 예보는 오전 5시에 업데이트 되어요! 아침에 다시 확인해주세요..!\n\n';
   let dustStatusString = dustCast[0].informGrade;
   let idx = dustStatusString.indexOf('경북 : ');
   const pm10Status = dustStatusString.slice(
@@ -114,6 +114,6 @@ module.exports.weatherForecast = async (callback) => {
 
   const dustText = generateDustText(responseBody);
   const lastText =
-    '날씨요정이 여러분들의 하루를 응원하고 있어요 🧚 \n오늘도 잘 사아내고 있어요, 좋은 하루 보내요! 💪';
+    '날씨요정이 여러분들의 하루를 응원하고 있어요 🧚 \n오늘도 잘 해내고 있어요, 좋은 하루 보내요! 💪';
   callback(weatherText + dustText + lastText);
 };

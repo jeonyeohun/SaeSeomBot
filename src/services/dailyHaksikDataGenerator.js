@@ -6,9 +6,8 @@ const LUNCH_MENU = 1;
 const DINNER_MENU = 2;
 const FRYFRY = 3;
 const NOODLE_ROAD = 4;
-const HAO = 5;
-const GRACE_GARDEN = 6;
-const MIX_RICE = 7;
+const GRACE_GARDEN = 5;
+const MIX_RICE = 6;
 
 const jsonSaveDir = '../data/';
 
@@ -76,10 +75,9 @@ function parseHaksikData(responseBody) {
     return;
   }
   const data = {
-    koreanTable: parseTimeMealData(responseBody.haksik, '3,000'),
+    koreanTable: parseTimeMealData(responseBody.haksik, '3,300'),
     fryFry: parseGeneralMealData(responseBody.haksik, FRYFRY),
     noodleRoad: parseGeneralMealData(responseBody.haksik, NOODLE_ROAD),
-    hao: parseGeneralMealData(responseBody.haksik, HAO),
     graceGarden: parseGeneralMealData(responseBody.haksik, GRACE_GARDEN),
     mixRice: parseGeneralMealData(responseBody.haksik, MIX_RICE),
   };
@@ -107,3 +105,4 @@ module.exports.updateHaksikData = () => {
     }
   );
 };
+
