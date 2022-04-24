@@ -5,19 +5,34 @@ const ResultData = require('../models/resultData');
 const {
   generateGeneralMealText,
   genreateTimeMealText,
-} = require('../services/haksikResultTextGenerator');
+} = require('../services/haksikChatMessageGenerator');
+
+router.post('/tomorrow', async (req, res) => {
+  data = JSON.parse(await readData(false));
+  res.json(generateChatMessage(data));
+});
 
 router.post('/', async (req, res) => {
-  let data = await fs.readFile(
-    '../data/meal-hak.json',
+  data = JSON.parse(await readData(true));
+  res.json(generateChatMessage(data));
+});
+
+function readData(isToday) {
+  const filePath = isToday ? '../data/today/meal-hak.json' : '../data/tomorrow/meal-hak.json'
+  return await fs.readFile(
+    filePath,
     'utf-8',
     (err, content) => {
       if (!content) {
+        console.log(err);
         throw err;
       }
     }
   );
+}
 
+
+function generateChatMessage(data) {
   if (data === '""') {
     const resultData = { ...ResultData };
     resultData.template.outputs[0].simpleText.text =
@@ -66,8 +81,6 @@ router.post('/', async (req, res) => {
 
   const resultData = { ...ResultData };
   resultData.template.outputs[0].simpleText.text = haksikText;
-
-  res.json(resultData);
-});
-
+  return resultData
+}
 module.exports = router;

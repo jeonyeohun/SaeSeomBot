@@ -7,7 +7,7 @@ const bus = require('./api/bus');
 const schedule = require('node-schedule');
 const covid = require('./api/covid');
 
-const { updateHaksikData } = require('./services/dailyHaksikDataGenerator');
+const { updateHaksikData } = require('./services/mealDataFetcher');
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
