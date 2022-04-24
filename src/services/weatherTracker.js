@@ -30,17 +30,10 @@ const weatherMessage = {
   Clouds: '우중충한 날씨이지만, 소확행으로 가득 찬 하루가 되었으면 좋겠어요!😊',
 };
 
-// TODO: Add wind speed
-const windSpeedMessage = {
-  noWind: '오늘은 바람이 많이 불지는 않아요!',
-  weakWind: '오늘은 가볍게 바람이 부는 날씨네요!',
-  strongWind: '오늘은 바람이 무척 강해요! 잘 챙겨입고 나가세요!',
-};
-
 const apiUrl =
-  'https://api.openweathermap.org/data/2.5/onecall?lat=36.102831&lon=129.389150&appid=' +
-  openWeatherAPIKey +
-  '&lang=kr&exclude=minutely,hourly,alerts&units=metric';
+  'https://api.openweathermap.org/data/2.5/onecall?lat=36.102831&lon=129.389150&appid=' 
+  + openWeatherAPIKey 
+  + '&lang=kr&exclude=minutely,hourly,alerts&units=metric';
 
 function generateDustUrl() {
   let date = new Date();
